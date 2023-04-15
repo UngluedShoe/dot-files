@@ -1,10 +1,28 @@
 " VIM Configuration Profile
+" REMEMBER Use 'hjkl' to move
+
+" Disable arrow keys
+"noremap <Up> <Nop>
+"noremap <Down> <Nop>
+"noremap <Left> <Nop>
+"noremap <Right> <Nop>
 
 " Use the PowerLine plugin. Change Python directory if needed.
-set rtp+=$HOME/.local/lib/python3.8/site-packages/powerline/bindings/vim/
+" python3 from powerline.vim import setup as powerline_setup
+" python3 powerline_setup()
+" python3 del powerline_setup
 
 " Always show statusline
 set laststatus=2
+
+" Always show the tabline
+set showtabline=2
+
+" Hide default mode text
+set noshowmode 
+
+" Turn off vi
+set nocompatible
 
 " Use 256 colours (Use this setting only if your terminal supports 256 colours)
 set t_Co=256
@@ -13,7 +31,7 @@ set t_Co=256
 set showcmd
 
 " Add numbers to each line on the left-hand side.
-set number
+set number relativenumber
 
 " Set shift width to 4 spaces.
 set shiftwidth=4
@@ -57,3 +75,89 @@ set hlsearch
 
 " Set the commands to save in history default number is 20.
 set history=1000
+
+" Set the colorchemem
+colorscheme nord
+
+" Start NERDTree and put the cursor back in the other window.
+autocmd VimEnter * NERDTree | wincmd p
+
+"Smart wayy to move between windows
+map <C-j> <C-W>j
+map <C-k> <C-W>k
+map <C-h> <C-W>h
+map <C-l> <C-W>l
+
+" Set airline theme
+let g:lightline = {
+      \ 'colorscheme': 'nord',
+      \ 'component': {
+          \   'readonly': '%{&readonly?"":""}',
+      \ },
+      \ 'separator': { 'left': '', 'right': '' },
+      \ 'subseparator': { 'left': '', 'right': '' }
+      \ }
+
+" Set tab to auto complete
+" inoremap <silent><expr> <tab> coc#refresh()
+
+" Set Syntastic settings
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+
+" PLUGINS ---------------------------------------------------------------- {{{
+
+call plug#begin()
+" The default plugin directory will be as follows:
+"   - Vim (Linux/macOS): '~/.vim/plugged'
+"   - Vim (Windows): '~/vimfiles/plugged'
+"   - Neovim (Linux/macOS/Windows): stdpath('data') . '/plugged'
+" You can specify a custom plugin directory by passing it as the argument
+"   - e.g. `call plug#begin('~/.vim/plugged')`
+"   - Avoid using standard Vim directory names like 'plugin'
+
+" Make sure you use single quotes
+
+    Plug 'preservim/nerdtree'
+    Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
+    Plug 'ryanoasis/vim-devicons'
+    Plug 'itchyny/lightline.vim'
+    Plug 'https://github.com/Valloric/YouCompleteMe'
+    Plug 'scrooloose/syntastic'
+
+" Initialize plugin system
+" - Automatically executes `filetype plugin indent on` and `syntax enable`.
+call plug#end()
+" You can revert the settings after the call like so:
+"   filetype indent off   " Disable file-type-specific indentation
+"   syntax off            " Disable syntax highlighting
+
+" }}}
+
+
+"0 MAPPINGS --------------------------------------------------------------- {{{
+
+" Mappings code goes here.
+
+" }}}
+
+
+" VIMSCRIPT -------------------------------------------------------------- {{{
+
+" This will enable code folding.
+" Use the marker method of folding.
+augroup filetype_vim
+    autocmd!
+    autocmd FileType vim setlocal foldmethod=marker
+augroup END
+
+" More Vimscripts code goes here.
+
+" }}}
+
